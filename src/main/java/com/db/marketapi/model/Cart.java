@@ -10,14 +10,15 @@ import java.util.List;
 public class Cart {
   @Id
   @Column(name = "cart_id", nullable = false)
+  @GeneratedValue
   private Long cartId;
 
   private Double cartTotalPrice;
   private Integer cartTotalProductsNo;
 
-  @OneToOne
-  @JoinColumn( name = "user_id")
-  private User user;
+   @OneToOne
+//  @JoinColumn( name = "user_id")
+   private User user;
 
   @OneToMany(cascade = CascadeType.ALL)
   List<Product> products;

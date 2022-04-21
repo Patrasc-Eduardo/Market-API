@@ -2,6 +2,8 @@ package com.db.marketapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -25,14 +27,16 @@ public class User {
 
   private Integer numOfOrders;
 
-  @MapsId
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn( name = "cart_id")
+  //, orphanRemoval = true
+  @OneToOne
+  //@OnDelete(action = OnDeleteAction.CASCADE)
+  //@JoinColumn( name = "cart_id")
   private Cart cart;
 
-  @MapsId
-  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn( name = "wishlist_id")
+  //@OneToOne(cascade = CascadeType.REMOVE)
+  //@OnDelete(action = OnDeleteAction.CASCADE)
+  //@JoinColumn( name = "wishlist_id")
+  @OneToOne
   private WishList wishlist;
 
   @OneToMany(cascade = CascadeType.ALL)

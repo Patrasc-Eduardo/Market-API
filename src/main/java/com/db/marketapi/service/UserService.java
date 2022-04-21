@@ -1,9 +1,11 @@
 package com.db.marketapi.service;
 
 import com.db.marketapi.model.Cart;
+import com.db.marketapi.model.Order;
 import com.db.marketapi.model.Product;
 import com.db.marketapi.model.User;
 import com.db.marketapi.repository.CartRepository;
+import com.db.marketapi.repository.OrderRepository;
 import com.db.marketapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class UserService {
   private final UserRepository userRepository;
   private final CartRepository cartRepository;
+  private final OrderRepository orderRepository;
 
   public User createUser(User user) {
     if (user.getOrderHistory() != null) {
@@ -29,6 +32,10 @@ public class UserService {
 
   public void deleteUserById(Long id) {
     userRepository.deleteById(id);
+  }
+
+  public List<User> getAllUsersSortedByNumOfOrders() {
+    return userRepository.findByOrderByNumOfOrdersAsc();
   }
 
   public User updateUser(User user) {

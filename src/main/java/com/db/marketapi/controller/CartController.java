@@ -1,13 +1,12 @@
 package com.db.marketapi.controller;
 
-import com.db.marketapi.model.Cart;
-import com.db.marketapi.model.Product;
-import com.db.marketapi.model.User;
-import com.db.marketapi.model.WishList;
+import com.db.marketapi.model.*;
 import com.db.marketapi.service.CartService;
 import com.db.marketapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public class CartController {
   private final UserService userService;
 
   @PostMapping("create")
-  public Cart createCart(@RequestBody Cart cart) {
+  public Cart createCart(@RequestBody Cart cart) { // /////
     return cartService.createCart(cart);
   }
 
@@ -34,9 +33,19 @@ public class CartController {
     return cartService.updateCart(cart);
   }
 
-  @DeleteMapping("delete/{id}")
-  public void deleteCartById(@PathVariable Long id) {
-    cartService.deleteCartById(id);
+  @DeleteMapping("delete/{id}/{userId}")
+  public void deleteCartByIdForUser(@PathVariable Long id, @PathVariable Long userId) {
+    cartService.deleteCartByIdForUser(id, userId);
+  }
+
+  @PostMapping("validate-cart/{userId}")
+  public User processCartMakeOrders(@PathVariable Long userId, @RequestBody Order order) {
+    return cartService.processCartMakeOrders(userId, order);
+  }
+
+  @GetMapping("get-carts-sorted-ProdTotal")
+  public List<Cart> getAllCartsFromUsersSortedByProdTotal() {
+    return cartService.getAllCartsFromUsersSortedByProdTotal();
   }
 
   @GetMapping("/{id}")
@@ -45,7 +54,7 @@ public class CartController {
   }
 
   @GetMapping("/all")
-  public List<Cart> getAllCarts(@PathVariable Long id) {
+  public List<Cart> getAllCarts() {
     return cartService.getAllCarts();
   }
 

@@ -31,9 +31,9 @@ public class WishlistController {
     return wishlistService.updateWishList(wishlist);
   }
 
-  @DeleteMapping("delete/{id}")
-  public void deleteWishlistById(@PathVariable Long id) {
-    wishlistService.deleteWishListById(id);
+  @DeleteMapping("delete/{id}/{userId}")
+  public void deleteWishlistByIdForUser(@PathVariable Long id, @PathVariable Long userId) {
+    wishlistService.deleteWishListByIdForUser(id, userId);
   }
 
   @GetMapping("/{id}")

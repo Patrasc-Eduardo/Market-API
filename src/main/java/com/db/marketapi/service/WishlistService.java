@@ -33,7 +33,9 @@ public class WishlistService {
     return null;
   }
 
-  public void deleteWishListById(Long id) {
+  public void deleteWishListByIdForUser(Long id, Long userId) {
+    Optional<User> user = userRepository.findById(userId);
+    user.get().setWishlist(null);
     wishlistRepository.deleteById(id);
   }
 

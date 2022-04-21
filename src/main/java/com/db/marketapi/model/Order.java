@@ -12,14 +12,17 @@ import java.util.Date;
 public class Order implements Comparable<Order> {
   @Id
   @Column(name = "order_id", nullable = false)
+  @GeneratedValue
   private Long orderId;
 
-  private String orderDescription;
   private Date orderDate;
   private Date shippedDate;
 
   @ManyToOne
   User user;
+
+  @ManyToOne
+  Cart cart;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn( name = "product_id")

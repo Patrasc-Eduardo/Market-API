@@ -27,6 +27,10 @@ public class UserController {
     return userService.updateUser(user);
   }
 
+  @GetMapping("get-users-sorted-numOrders")
+  public List<User> getAllUsersSortedByNumOfOrders() {
+    return userService.getAllUsersSortedByNumOfOrders();
+  }
   @DeleteMapping("delete/{id}")
   public void deleteUserById(@PathVariable Long id) {
     userService.deleteUserById(id);
@@ -36,6 +40,7 @@ public class UserController {
   public Optional<User> getUserById(@PathVariable Long id) {
     return userService.getUserById(id);
   }
+
 
   @GetMapping("/all")
   public List<User> getAllUsers() {

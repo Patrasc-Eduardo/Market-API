@@ -13,8 +13,8 @@ public class WishList {
   @GeneratedValue
   private Long wishListId;
 
-  @OneToOne(mappedBy = "wishlist")
-  User user;
+//  @OneToOne(mappedBy = "wishlist")
+//  User user;
 
   @OneToMany(cascade = CascadeType.ALL)
   List<Product> desiredProducts;
