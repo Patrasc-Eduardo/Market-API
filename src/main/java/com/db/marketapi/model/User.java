@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users_table")
+@Table(name = "user")
 public class User {
   @Id
   @Column(name = "user_id", nullable = false)
@@ -27,18 +27,12 @@ public class User {
 
   private Integer numOfOrders;
 
-  //, orphanRemoval = true
   @OneToOne
-  //@OnDelete(action = OnDeleteAction.CASCADE)
-  //@JoinColumn( name = "cart_id")
   private Cart cart;
 
-  //@OneToOne(cascade = CascadeType.REMOVE)
-  //@OnDelete(action = OnDeleteAction.CASCADE)
-  //@JoinColumn( name = "wishlist_id")
   @OneToOne
   private WishList wishlist;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   List<Order> orderHistory;
 }

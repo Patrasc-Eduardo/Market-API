@@ -23,7 +23,7 @@ public class CartController {
     return cartService.createCart(cart);
   }
 
-  @PostMapping("create-cart/{userId}")
+  @PostMapping("create/{userId}")
   public Cart createCartForUser(@RequestBody Cart cart, @PathVariable Long userId) {
     return cartService.createCartForUser(cart, userId);
   }

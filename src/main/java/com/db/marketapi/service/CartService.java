@@ -5,6 +5,7 @@ import com.db.marketapi.model.Order;
 import com.db.marketapi.model.Product;
 import com.db.marketapi.model.User;
 import com.db.marketapi.repository.CartRepository;
+import com.db.marketapi.repository.OrderRepository;
 import com.db.marketapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class CartService {
   private final CartRepository cartRepository;
   private final UserRepository userRepository;
+  private final OrderRepository orderRepository;
 
   public Cart createCart(Cart cart) {
     if (cart.getProducts() != null) {
@@ -59,6 +61,7 @@ public class CartService {
     if (user.isPresent()) {
       if (user.get().getCart().getProducts().size() > 0) {
         for (Product product : user.get().getCart().getProducts()) {
+          Order newOrder = orderRepository.save(order);
           order.setProductOrdered(product);
           user.get().getOrderHistory().add(order);
           user.get()

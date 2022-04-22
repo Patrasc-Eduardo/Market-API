@@ -15,4 +15,7 @@ public class Product {
   private Long productCode;
   private String productDescription;
   private Double price;
+
+  @OneToOne(cascade = CascadeType.REMOVE)
+  Order order;
 }

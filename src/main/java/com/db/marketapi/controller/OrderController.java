@@ -37,7 +37,7 @@ public class OrderController {
   }
 
   @GetMapping("/all")
-  public List<Order> getAllOrders(@PathVariable Long id) {
+  public List<Order> getAllOrders() {
     return orderService.getAllOrders();
   }
 }

@@ -1,6 +1,8 @@
 package com.db.marketapi.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -21,12 +23,16 @@ public class Order implements Comparable<Order> {
   @ManyToOne
   User user;
 
-  @ManyToOne
-  Cart cart;
+//  @ManyToOne
+//  Cart cart;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn( name = "product_id")
-  private Product productOrdered;
+//  @OneToOne
+//  @JoinColumn( name = "product_id")
+//    @ManyToOne
+//    @JoinColumn(name = "product_ordered_product_id")
+//    private Product productOrdered;
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    Product productOrdered;
 
   @Override
   public int compareTo(@NotNull Order o) {

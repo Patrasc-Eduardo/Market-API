@@ -43,9 +43,13 @@ public class ProductService {
       if (userCart != null) {
         userCart.setCartTotalProductsNo(userCart.getCartTotalProductsNo() + 1);
         userCart.setCartTotalPrice(userCart.getCartTotalPrice() + product.getPrice());
+        user.ifPresent(value -> value.getCart().getProducts().add(product));
+        System.err.println(user.get());
+        //userRepository.save(user.get());
         cartRepository.save(userCart);
       }
-      user.ifPresent(value -> value.getCart().getProducts().add(product));
+//      user.ifPresent(value -> value.getCart().getProducts().add(product));
+//      System.err.println(user.get());
       userRepository.save(user.get());
       return product;
     }
