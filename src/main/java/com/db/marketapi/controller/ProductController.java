@@ -18,26 +18,24 @@ public class ProductController {
     return productService.createProduct(product);
   }
 
-  @PostMapping("add-to-cart/{userId}/{productId}")
+  @PostMapping("add-to-cart/{userId}")
   public Product addProductToUserCart(
-      @PathVariable("userId") Long userId, @PathVariable Long productId) {
-    Optional<Product> getProduct = productService.getProductById(productId);
-    if (getProduct.isPresent()) {
-      return productService.addProductToUserCart(
-          userId, productService.createProduct(getProduct.get()));
-    }
-    return null;
+      @PathVariable("userId") Long userId, @RequestBody Product product) {
+//    Optional<Product> getProduct = productService.getProductById(productId);
+//    if (getProduct.isPresent()) {
+      return productService.addProductToUserCart(userId, product);
+//    }
+//    return null;
   }
 
   @PostMapping("add-to-wish/{userId}/{productId}")
   public Product addProductToWishList(
       @PathVariable("userId") Long userId, @PathVariable Long productId) {
-    Optional<Product> getProduct = productService.getProductById(productId);
-    if (getProduct.isPresent()) {
-      return productService.addProductToWishList(
-          userId, productService.createProduct(getProduct.get()));
-    }
-    return null;
+    //    Optional<Product> getProduct = productService.getProductById(productId);
+    //    if (getProduct.isPresent()) {
+    return productService.addProductToWishList(userId, productId);
+    //    }
+    // return null
   }
 
   @PostMapping("update")
@@ -45,10 +43,10 @@ public class ProductController {
     return productService.updateProduct(product);
   }
 
-  @DeleteMapping("delete/{id}")
-  public void deleteProductById(@PathVariable Long id) {
-    productService.deleteProductById(id);
-  }
+  //  @DeleteMapping("delete/{id}")
+  //  public void deleteProductById(@PathVariable Long id) {
+  //    productService.deleteProductById(id);
+  //  }
 
   @DeleteMapping("delete-from-cart/{userId}/{productId}")
   public void deleteProductFromUserCart(

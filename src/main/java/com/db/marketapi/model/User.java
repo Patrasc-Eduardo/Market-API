@@ -20,10 +20,10 @@ import java.util.List;
 public class User {
   @Id
   @Column(name = "user_id", nullable = false)
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @NotNull private String username;
+  private String username;
 
   private Integer numOfOrders;
 
@@ -33,6 +33,7 @@ public class User {
   @OneToOne
   private WishList wishlist;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL)
   List<Order> orderHistory;
 }

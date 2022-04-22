@@ -18,11 +18,6 @@ public class CartController {
   private final CartService cartService;
   private final UserService userService;
 
-  @PostMapping("create")
-  public Cart createCart(@RequestBody Cart cart) { // /////
-    return cartService.createCart(cart);
-  }
-
   @PostMapping("create/{userId}")
   public Cart createCartForUser(@RequestBody Cart cart, @PathVariable Long userId) {
     return cartService.createCartForUser(cart, userId);

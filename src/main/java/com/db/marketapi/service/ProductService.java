@@ -35,77 +35,45 @@ public class ProductService {
   public Product addProductToUserCart(Long userId, Product product) {
     Optional<User> user = userRepository.findById(userId);
 
-    assert user.get().getCart() != null;
-
-    Cart userCart;
     if (user.isPresent()) {
-      userCart = user.get().getCart();
-      if (userCart != null) {
-        userCart.setCartTotalProductsNo(userCart.getCartTotalProductsNo() + 1);
-        userCart.setCartTotalPrice(userCart.getCartTotalPrice() + product.getPrice());
-        user.ifPresent(value -> value.getCart().getProducts().add(product));
-        System.err.println(user.get());
-        //userRepository.save(user.get());
-        cartRepository.save(userCart);
-      }
-//      user.ifPresent(value -> value.getCart().getProducts().add(product));
-//      System.err.println(user.get());
-      userRepository.save(user.get());
-      return product;
+      user.get().getCart().getProducts().add(product);
+      user.get().getCart().setCartTotalPrice(user.get().getCart().getCartTotalPrice() + product.getPrice());
+      user.get().getCart().setCartTotalProductsNo(user.get().getCart().getCartTotalProductsNo() + 1);
     }
-    return null;
+    return productRepository.save(product);
   }
 
-  public Product addProductToWishList(Long userId, Product product) {
+  public Product addProductToWishList(Long userId, Long productId) {
     Optional<User> user = userRepository.findById(userId);
+    Optional<Product> product = productRepository.findById(productId);
 
-    assert user.get().getCart() != null;
-
-    WishList userWishList;
-    if (user.isPresent()) {
-      userWishList = user.get().getWishlist();
-      if (userWishList != null) {
-
-        wishListRepository.save(userWishList);
-      }
-      user.ifPresent(value -> value.getWishlist().getDesiredProducts().add(product));
-      userRepository.save(user.get());
-      return product;
+    if (user.isPresent() && product.isPresent()) {
+      WishList wishList = user.get().getWishlist();
+      wishList.getDesiredProducts().add(product.get());
+      user.get().setWishlist(wishList);
     }
-    return null;
+
+    return product.get();
   }
 
   public void deleteProductFromUserCart(Long userId, Long productId) {
     Optional<User> user = userRepository.findById(userId);
-    Cart userCart;
-    if (user.isPresent()) {
-      userCart = user.get().getCart();
-      if (userCart != null) {
-        userCart
-            .getProducts()
-            .removeIf(
-                prod ->
-                    Long.compare(prod.getProductId(), productId)
-                        == 0); // sterg daca gasesc produsul cu id-ul cautat
-        cartRepository.save(userCart);
-      }
+    Optional<Product> product = productRepository.findById(productId);
+
+    if (user.isPresent() && product.isPresent()) {
+      user.get().getCart().getProducts().remove(product.get());
+      productRepository.deleteById(productId);
     }
+
   }
 
   public void deleteProductFromWishList(Long userId, Long productId) {
     Optional<User> user = userRepository.findById(userId);
-    WishList userWishList;
-    if (user.isPresent()) {
-      userWishList = user.get().getWishlist();
-      if (userWishList != null) {
-        userWishList
-            .getDesiredProducts()
-            .removeIf(
-                prod ->
-                    Long.compare(prod.getProductId(), productId)
-                        == 0); // sterg daca gasesc produsul cu id-ul cautat
-        wishListRepository.save(userWishList);
-      }
+    Optional<Product> product = productRepository.findById(productId);
+
+    if (user.isPresent() && product.isPresent()) {
+      user.get().getWishlist().getDesiredProducts().remove(product);
+      productRepository.deleteById(productId);
     }
   }
 

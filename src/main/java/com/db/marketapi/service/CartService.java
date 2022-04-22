@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,33 +22,23 @@ import java.util.Optional;
 public class CartService {
   private final CartRepository cartRepository;
   private final UserRepository userRepository;
-  private final OrderRepository orderRepository;
 
-  public Cart createCart(Cart cart) {
-    if (cart.getProducts() != null) {
-      cart.setCartTotalPrice(cart.getProducts().stream().mapToDouble(Product::getPrice).sum());
-      cart.setCartTotalProductsNo(cart.getProducts().size());
-    }
-    return cartRepository.save(cart);
-  }
-
-  public Cart createCartForUser(Cart cart, Long id) {
-    Optional<User> user = userRepository.findById(id);
-    if (user.isPresent()) {
-      cart.setCartTotalPrice(cart.getProducts().stream().mapToDouble(Product::getPrice).sum());
-      cart.setCartTotalProductsNo(cart.getProducts().size());
-      Cart newCart = cartRepository.save(cart);
-      user.get().setCart(newCart);
-      userRepository.save(user.get());
-      return newCart;
+  public Cart createCartForUser(Cart cart, Long userId) {
+    Optional<User> optUser = userRepository.findById(userId);
+    if (optUser.isPresent()) {
+      User user = optUser.get();
+      user.setCart(cart);
+      return cartRepository.save(cart);
     }
     return null;
   }
 
   public void deleteCartByIdForUser(Long id, Long userId) {
     Optional<User> user = userRepository.findById(userId);
-    user.get().setCart(null);
-    cartRepository.deleteById(id);
+    if (user.isPresent()) {
+      user.get().setCart(null);
+      cartRepository.deleteById(id);
+    }
   }
 
   /*
@@ -57,15 +48,14 @@ public class CartService {
    */
   public User processCartMakeOrders(Long userId, Order order) {
 
-    Optional<User> user = userRepository.findById(userId);
-    if (user.isPresent()) {
-      if (user.get().getCart().getProducts().size() > 0) {
-        for (Product product : user.get().getCart().getProducts()) {
-          Order newOrder = orderRepository.save(order);
-          order.setProductOrdered(product);
-          user.get().getOrderHistory().add(order);
-          user.get()
-              .getOrderHistory()
+    Optional<User> userOpt = userRepository.findById(userId);
+    if (userOpt.isPresent()) {
+      User user = userOpt.get();
+      if (user.getCart().getProducts().size() > 0) {
+        for (Product product : user.getCart().getProducts()) {
+          order.setProductDetails(product.getProductDescription());
+          user.getOrderHistory().add(order);
+          user.getOrderHistory()
               .sort(
                   new Comparator<Order>() {
                     @Override
@@ -73,12 +63,13 @@ public class CartService {
                       return o1.getOrderDate().compareTo(o2.getOrderDate());
                     }
                   });
-          if (user.get().getNumOfOrders() != null ) {
-            user.get().setNumOfOrders(user.get().getNumOfOrders() + 1);
+          if (user.getNumOfOrders() != null) {
+            user.setNumOfOrders(user.getNumOfOrders() + 1);
           }
         }
       }
-      return userRepository.save(user.get());
+      //      orderRepository.save(order);
+      return user;
     }
     return null;
   }

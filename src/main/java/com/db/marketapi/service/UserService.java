@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
   private final UserRepository userRepository;
-  private final CartRepository cartRepository;
-  private final OrderRepository orderRepository;
 
   public User createUser(User user) {
-    if (user.getOrderHistory() != null) {
-      user.setNumOfOrders(user.getOrderHistory().size());
-    }
     return userRepository.save(user);
   }
 

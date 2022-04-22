@@ -10,11 +10,11 @@ import java.util.List;
 public class WishList {
   @Id
   @Column(name = "wish_list_id", nullable = false)
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long wishListId;
 
-//  @OneToOne(mappedBy = "wishlist")
-//  User user;
+  @OneToOne
+  User user;
 
   @OneToMany(cascade = CascadeType.ALL)
   List<Product> desiredProducts;

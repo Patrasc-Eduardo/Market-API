@@ -26,9 +26,9 @@ public class OrderController {
     return orderService.updateOrder(order);
   }
 
-  @DeleteMapping("delete/{id}")
-  public void deleteOrderById(@PathVariable Long id) {
-    orderService.deleteOrderById(id);
+  @DeleteMapping("delete/{userId}/{id}")
+  public void deleteOrderFromUserOrderHistory(@PathVariable Long userId, @PathVariable Long id) {
+    orderService.deleteOrderFromUserOrderHistory(userId, id);
   }
 
   @GetMapping("/{id}")

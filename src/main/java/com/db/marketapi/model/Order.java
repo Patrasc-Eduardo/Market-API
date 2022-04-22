@@ -14,25 +14,12 @@ import java.util.Date;
 public class Order implements Comparable<Order> {
   @Id
   @Column(name = "order_id", nullable = false)
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long orderId;
 
   private Date orderDate;
   private Date shippedDate;
-
-  @ManyToOne
-  User user;
-
-//  @ManyToOne
-//  Cart cart;
-
-//  @OneToOne
-//  @JoinColumn( name = "product_id")
-//    @ManyToOne
-//    @JoinColumn(name = "product_ordered_product_id")
-//    private Product productOrdered;
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    Product productOrdered;
+  private String productDetails;
 
   @Override
   public int compareTo(@NotNull Order o) {

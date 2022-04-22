@@ -1,24 +1,26 @@
 package com.db.marketapi.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Cart {
   @Id
   @Column(name = "cart_id", nullable = false)
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long cartId;
 
   private Double cartTotalPrice;
   private Integer cartTotalProductsNo;
 
-   @OneToOne
-   private User user;
+  @OneToOne
+  User user;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER)
   List<Product> products;
 }
