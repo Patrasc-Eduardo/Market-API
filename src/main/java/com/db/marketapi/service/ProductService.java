@@ -1,17 +1,12 @@
 package com.db.marketapi.service;
 
-import com.db.marketapi.model.Cart;
 import com.db.marketapi.model.Product;
 import com.db.marketapi.model.User;
 import com.db.marketapi.model.WishList;
-import com.db.marketapi.repository.CartRepository;
 import com.db.marketapi.repository.ProductRepository;
 import com.db.marketapi.repository.UserRepository;
-import com.db.marketapi.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +16,6 @@ public class ProductService {
 
   private final ProductRepository productRepository;
   private final UserRepository userRepository;
-  private final CartRepository cartRepository;
-  private final WishlistRepository wishListRepository;
 
   public Product createProduct(Product product) {
     return productRepository.save(product);
@@ -37,8 +30,12 @@ public class ProductService {
 
     if (user.isPresent()) {
       user.get().getCart().getProducts().add(product);
-      user.get().getCart().setCartTotalPrice(user.get().getCart().getCartTotalPrice() + product.getPrice());
-      user.get().getCart().setCartTotalProductsNo(user.get().getCart().getCartTotalProductsNo() + 1);
+      user.get()
+          .getCart()
+          .setCartTotalPrice(user.get().getCart().getCartTotalPrice() + product.getPrice());
+      user.get()
+          .getCart()
+          .setCartTotalProductsNo(user.get().getCart().getCartTotalProductsNo() + 1);
     }
     return productRepository.save(product);
   }
@@ -64,7 +61,6 @@ public class ProductService {
       user.get().getCart().getProducts().remove(product.get());
       productRepository.deleteById(productId);
     }
-
   }
 
   public void deleteProductFromWishList(Long userId, Long productId) {

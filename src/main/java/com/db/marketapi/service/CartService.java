@@ -5,14 +5,9 @@ import com.db.marketapi.model.Order;
 import com.db.marketapi.model.Product;
 import com.db.marketapi.model.User;
 import com.db.marketapi.repository.CartRepository;
-import com.db.marketapi.repository.OrderRepository;
 import com.db.marketapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +63,6 @@ public class CartService {
           }
         }
       }
-      //      orderRepository.save(order);
       return user;
     }
     return null;

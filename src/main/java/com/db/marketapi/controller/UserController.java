@@ -4,7 +4,6 @@ import com.db.marketapi.model.*;
 import com.db.marketapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +12,6 @@ import java.util.Optional;
 @RequestMapping("user")
 public class UserController {
   private final UserService userService;
-  private final CartService cartService;
-  private final ProductService productService;
-  private final WishlistService wishlistService;
 
   @PostMapping("create")
   public User createUser(@RequestBody User user) {
@@ -31,6 +27,7 @@ public class UserController {
   public List<User> getAllUsersSortedByNumOfOrders() {
     return userService.getAllUsersSortedByNumOfOrders();
   }
+
   @DeleteMapping("delete/{id}")
   public void deleteUserById(@PathVariable Long id) {
     userService.deleteUserById(id);
@@ -40,7 +37,6 @@ public class UserController {
   public Optional<User> getUserById(@PathVariable Long id) {
     return userService.getUserById(id);
   }
-
 
   @GetMapping("/all")
   public List<User> getAllUsers() {

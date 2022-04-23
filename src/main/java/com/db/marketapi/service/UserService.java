@@ -1,19 +1,9 @@
 package com.db.marketapi.service;
 
-import com.db.marketapi.model.Cart;
-import com.db.marketapi.model.Order;
-import com.db.marketapi.model.Product;
 import com.db.marketapi.model.User;
-import com.db.marketapi.repository.CartRepository;
-import com.db.marketapi.repository.OrderRepository;
 import com.db.marketapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

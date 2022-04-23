@@ -2,7 +2,6 @@ package com.db.marketapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,8 +17,7 @@ public class Cart {
   private Double cartTotalPrice;
   private Integer cartTotalProductsNo;
 
-  @OneToOne
-  User user;
+  @OneToOne User user;
 
   @OneToMany(fetch = FetchType.EAGER)
   List<Product> products;

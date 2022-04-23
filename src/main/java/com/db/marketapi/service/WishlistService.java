@@ -5,7 +5,6 @@ import com.db.marketapi.model.WishList;
 import com.db.marketapi.repository.UserRepository;
 import com.db.marketapi.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

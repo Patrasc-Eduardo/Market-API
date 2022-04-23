@@ -1,12 +1,9 @@
 package com.db.marketapi.controller;
 
-import com.db.marketapi.model.Cart;
 import com.db.marketapi.model.Order;
-import com.db.marketapi.service.CartService;
 import com.db.marketapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 

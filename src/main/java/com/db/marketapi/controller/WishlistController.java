@@ -1,6 +1,5 @@
 package com.db.marketapi.controller;
 
-import com.db.marketapi.model.User;
 import com.db.marketapi.model.WishList;
 import com.db.marketapi.service.UserService;
 import com.db.marketapi.service.WishlistService;

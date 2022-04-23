@@ -2,10 +2,6 @@ package com.db.marketapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,13 +23,10 @@ public class User {
 
   private Integer numOfOrders;
 
-  @OneToOne
-  private Cart cart;
+  @OneToOne private Cart cart;
 
-  @OneToOne
-  private WishList wishlist;
+  @OneToOne private WishList wishlist;
 
-  //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OneToMany(cascade = CascadeType.ALL)
   List<Order> orderHistory;
 }

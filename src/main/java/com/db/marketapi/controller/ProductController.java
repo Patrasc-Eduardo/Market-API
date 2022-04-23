@@ -21,32 +21,20 @@ public class ProductController {
   @PostMapping("add-to-cart/{userId}")
   public Product addProductToUserCart(
       @PathVariable("userId") Long userId, @RequestBody Product product) {
-//    Optional<Product> getProduct = productService.getProductById(productId);
-//    if (getProduct.isPresent()) {
-      return productService.addProductToUserCart(userId, product);
-//    }
-//    return null;
+    return productService.addProductToUserCart(userId, product);
   }
 
   @PostMapping("add-to-wish/{userId}/{productId}")
   public Product addProductToWishList(
       @PathVariable("userId") Long userId, @PathVariable Long productId) {
-    //    Optional<Product> getProduct = productService.getProductById(productId);
-    //    if (getProduct.isPresent()) {
+
     return productService.addProductToWishList(userId, productId);
-    //    }
-    // return null
   }
 
   @PostMapping("update")
   public Product updateProduct(@RequestBody Product product) {
     return productService.updateProduct(product);
   }
-
-  //  @DeleteMapping("delete/{id}")
-  //  public void deleteProductById(@PathVariable Long id) {
-  //    productService.deleteProductById(id);
-  //  }
 
   @DeleteMapping("delete-from-cart/{userId}/{productId}")
   public void deleteProductFromUserCart(
